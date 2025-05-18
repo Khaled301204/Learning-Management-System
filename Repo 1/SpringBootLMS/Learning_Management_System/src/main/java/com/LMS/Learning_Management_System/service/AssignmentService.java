@@ -143,42 +143,30 @@ public class AssignmentService {
         if (loggedInInstructor == null) {
             throw new IllegalArgumentException("You are not logged in");
         }
-        Assignment assignment = assignmentRepository.findById(assigID)
-                .orElseThrow(()-> new IllegalArgumentException("Assignment not found"));
 
+        Assignment assignment = assignmentRepository.findById(assigID)
+                .orElseThrow(() -> new IllegalArgumentException("Assignment not found"));
 
         Student student = studentRepository.findById(loggedInInstructor.getUserId())
-                .orElseThrow(()-> new IllegalArgumentException("You're not a student"));
+                .orElseThrow(() -> new IllegalArgumentException("You're not a student"));
 
-        Boolean isExist = enrollmentRepository.existsByStudentAndCourse(student, assignment.getCourseID());
+        boolean isExist = enrollmentRepository.existsByStudentAndCourse(student, assignment.getCourseID());
         if (!isExist) {
             throw new IllegalArgumentException("You're not enrolled in this course");
         }
 
-        List<Submission> submission = submissionRepository.findByStudentId(student);
+        List<Submission> submissions = submissionRepository.findByStudentId(student);
 
-
-        if (submission.isEmpty()) {
+        if (submissions.isEmpty()) {
             throw new IllegalArgumentException("Student has no submissions");
         }
 
-        String feedback = "";
-
-        for (Submission s : submission) {
+        for (Submission s : submissions) {
             if (s.getAssignmentId().getAssignmentId() == assignment.getAssignmentId()) {
-                if (s.getFeedback() == null){
-                    feedback =  "There is no feedback yet";
-                    break;
-
+                return s.getFeedback() != null ? s.getFeedback() : "There is no feedback yet";
             }
-                else {
-                    feedback =  s.getFeedback();
-                    break;
-                }
         }
         throw new IllegalArgumentException("Student didn't submit this assignment");
-    }
-        return feedback;
     }
 
     public List <String> assignmentSubmissions (int assignmentId, HttpServletRequest request)

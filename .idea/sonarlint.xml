@@ -3,6 +3,6 @@
   <component name="SonarLintProjectSettings">
     <option name="bindingEnabled" value="true" />
     <option name="projectKey" value="LearningManagementSystem" />
-    <option name="serverId" value="sonar connection" />
+    <option name="serverId" value="LearningManagementSystem" />
   </component>
 </project>

@@ -1,6 +1,0 @@
-projectKey=LearningManagementSystem
-serverUrl=http://localhost:9000
-serverVersion=25.4.0.105899
-dashboardUrl=http://localhost:9000/dashboard?id=LearningManagementSystem
-ceTaskId=a0525db3-b6b1-48ac-a568-155e7775ffd1
-ceTaskUrl=http://localhost:9000/api/ce/task?id=a0525db3-b6b1-48ac-a568-155e7775ffd1

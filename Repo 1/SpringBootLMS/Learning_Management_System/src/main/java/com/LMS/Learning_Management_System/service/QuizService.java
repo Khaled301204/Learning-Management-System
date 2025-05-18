@@ -18,6 +18,7 @@ import org.springframework.data.util.Pair;
 import org.springframework.stereotype.Service;
 
 import java.util.*;
+import java.util.concurrent.ThreadLocalRandom;
 
 @Service
 public class QuizService {
@@ -198,21 +199,25 @@ public class QuizService {
 
     }
 
-    public void generateQuestions(Quiz quiz,int questionType, Course course_id) throws Exception {
-
+    public void generateQuestions(Quiz quiz, int questionType, Course course_id) throws Exception {
         List<Question> allQuestions = questionRepository
-                .findQuestionsByCourseIdAndQuestionType(course_id.getCourseId(),questionType);  // get all questions with same type
+                .findQuestionsByCourseIdAndQuestionType(course_id.getCourseId(), questionType);
+
         List<Question> emptyQuestions = questionRepository
-                .findEmptyQuestionsByCourseIdAndQuestionType(course_id.getCourseId(),questionType);
-        if(allQuestions.size()< 5 )
-            throw new Exception("No enough Questions to create quiz!\n");
-        if(emptyQuestions.size() < 5 )
-            throw new Exception("No enough unassigned questions to create new quiz! number: "+emptyQuestions.size()+" type "+questionType+"\n"); ///
-        Random random = new Random();
-        Set<Integer> selectedIndices = new HashSet<>();  // To track selected indices
+                .findEmptyQuestionsByCourseIdAndQuestionType(course_id.getCourseId(), questionType);
+
+        if (allQuestions.size() < 5)
+            throw new Exception("Not enough questions to create quiz!\n");
+
+        if (emptyQuestions.size() < 5)
+            throw new Exception("Not enough unassigned questions to create new quiz! Number: "
+                    + emptyQuestions.size() + " Type: " + questionType + "\n");
+
+        Set<Integer> selectedIndices = new HashSet<>();
         int count = 0;
+
         while (count < 5) {
-            int randomNumber = random.nextInt(allQuestions.size());
+            int randomNumber = ThreadLocalRandom.current().nextInt(allQuestions.size());
 
             if (!selectedIndices.contains(randomNumber)) {
                 selectedIndices.add(randomNumber);

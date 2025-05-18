@@ -8,7 +8,8 @@ CREATE TABLE `users_type` (
   PRIMARY KEY (`user_type_id`)
 ) ENGINE=InnoDB AUTO_INCREMENT=3 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
 
-INSERT INTO `users_type` VALUES (1, 'ADMIN'), (2, 'STUDENT'), (3, 'INSTRUCTOR');
+INSERT INTO users (user_id, email, password, user_type_id)
+VALUES ('1', 'admin@example.com', '$2a$10$gt0IMUj9pTJoMQRvMESUzOSQNNl7C1HnixUmo3iuO0s2CT2qB5eXW', '1');
 
 CREATE TABLE `users` (
   `user_id` int NOT NULL AUTO_INCREMENT,

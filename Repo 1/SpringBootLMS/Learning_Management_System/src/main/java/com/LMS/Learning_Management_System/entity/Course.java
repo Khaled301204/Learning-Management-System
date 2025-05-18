@@ -3,6 +3,7 @@ package com.LMS.Learning_Management_System.entity;
 import jakarta.persistence.*;
 import org.springframework.format.annotation.DateTimeFormat;
 
+import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
 
@@ -46,7 +47,7 @@ public class Course {
         this.media = media;
         this.duration = duration;
         this.creationDate = creationDate;
-        this.lessons = lessons;
+        this.lessons = new ArrayList<>();
     }
 
     public int getCourseId() {
